@@ -50,7 +50,8 @@ public class biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             }
         }
 
-        return "deslogado";
+        System.out.println("Essa conta não existe ou você errou o email/senha");
+        return "erro";
     }
 
     public void cadastrar_usuario() {
@@ -69,10 +70,19 @@ public class biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         id += 1;
     }
 
+    public void editar_perfil() {
+        System.out.println("Digite o novo nome:");
+        sc.nextLine();
+        nome = sc.nextLine();
+        System.out.println("Digite o novo email:");
+        email = sc.nextLine();
+        contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
+        System.out.println("Nome e email alterados com sucesso!");
+    }
+
     public void logout() {
         if (logado) {
             logado = false;
-            index_user = -1;
             System.out.println("Logout realizado com sucesso!");
         } else {
             System.out.println("Nenhum usuário logado!");
