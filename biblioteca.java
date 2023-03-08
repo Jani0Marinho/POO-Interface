@@ -12,7 +12,7 @@ public class biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     private ArrayList<Integer> id_multa = new ArrayList<>();
     private ArrayList<Integer> id_multapaga = new ArrayList<>();
 
-    public String nome, email, senha, titulo, autor, controle, dev, nome_b, email_b, senha_b, log = "n";
+    public String nome, email, senha, titulo, autor, controle, dev, nome_b, email_b, senha_b, log = "n", plan, BIO;
 
     private boolean logado;
 
@@ -34,7 +34,8 @@ public class biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         nome_b = "biblioteca";
         email_b = "biblioteca123@gmail.com";
         senha_b = "admin";
-        contas.add(new conta(email_b, senha_b, nome_b, 0));
+        contas.add(new admin(email_b, senha_b, nome_b, 0));
+        contas.get(0).defPlano("Administrador");
     }
 
     public String login() {
@@ -48,6 +49,11 @@ public class biblioteca { // ADICIONAR ou REMOVER livros do acervo;
                 System.out.println("Login realizado com sucesso!");
                 return "logado";
             }
+            else{
+                if(i == contas.size()-1){
+                    return "n logado";
+                }
+            }
         }
 
         System.out.println("Essa conta não existe ou você errou o email/senha");
@@ -55,29 +61,100 @@ public class biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void cadastrar_usuario() {
-        System.out.println("Digite seu nome:");
-        nome = sc.nextLine();
 
-        System.out.println("Digite o email:");
-        email = sc.nextLine();
+        System.out.println("Digite seu plano:");
+        plan = sc.nextLine();
 
-        System.out.println("Digite a senha:");
-        senha = sc.nextLine();
+        if(plan.equalsIgnoreCase("comum")){
+            System.out.println("Digite seu nome:");
+            nome = sc.nextLine();
 
-        System.out.println("Usuário " + nome + " cadastrado!");
+            System.out.println("Digite o email:");
+            email = sc.nextLine();
 
-        contas.add(new conta(email, senha, nome, id));
-        id += 1;
+            System.out.println("Digite a senha:");
+            senha = sc.nextLine();
+
+            contas.get(index_user).defPlano(plan);
+        
+            System.out.println("Usuário " + nome + " cadastrado!");
+
+            contas.add(new comum(email, senha, nome, id));
+            id += 1;
+        }
+        else if(plan.equalsIgnoreCase("premium")){
+            System.out.println("Digite seu nome:");
+            nome = sc.nextLine();
+
+            System.out.println("Digite o email:");
+            email = sc.nextLine();
+
+            System.out.println("Digite a senha:");
+            senha = sc.nextLine();
+
+            contas.get(index_user).defPlano(plan);
+            
+            System.out.println("Usuário " + nome + " cadastrado!");
+
+            contas.add(new premium(email, senha, nome, id));
+            id += 1;
+        }
+        else{
+            System.out.println("Plano inválido! Digite novamente.");
+        }
     }
 
     public void editar_perfil() {
-        System.out.println("Digite o novo nome:");
-        sc.nextLine();
-        nome = sc.nextLine();
-        System.out.println("Digite o novo email:");
-        email = sc.nextLine();
-        contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
-        System.out.println("Nome e email alterados com sucesso!");
+        if(contas.get(index_user).getPlano().equalsIgnoreCase("comum")){
+            System.out.println("Digite o novo nome:");
+            sc.nextLine();
+            nome = sc.nextLine();
+            System.out.println("Digite o novo email:");
+            email = sc.nextLine();
+            System.out.println("Digite uma BIO para você com até 50 caracteres (caso não desejar digite 00):");
+            BIO = sc.nextLine();
+            if(BIO.length() > 50){
+                System.out.println("Você excedeu o número de caracteres");
+            }
+            else if(BIO == "00"){
+            }
+            else{
+                contas.get(index_user).defBios(BIO);
+            }
+            contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
+            System.out.println("Nome e email alterados com sucesso!");
+        }
+        else if(contas.get(index_user).getPlano().equalsIgnoreCase("premium")){
+            System.out.println("Digite o novo nome:");
+            sc.nextLine();
+            nome = sc.nextLine();
+            System.out.println("Digite o novo email:");
+            email = sc.nextLine();
+            System.out.println("Digite uma BIO para você com até 200 caracteres (caso não desejar digite 00):");
+            BIO = sc.nextLine();
+            if(BIO.length() > 200){
+                System.out.println("Você excedeu o número de caracteres");
+            }
+            else if(BIO == "00"){
+            }
+            else{
+                contas.get(index_user).defBios(BIO);
+            }
+            contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
+            System.out.println("Nome e email alterados com sucesso!");
+        }
+        else if(contas.get(index_user).getPlano().equalsIgnoreCase("administrador")){
+            System.out.println("Digite o novo nome:");
+            sc.nextLine();
+            nome = sc.nextLine();
+            System.out.println("Digite o novo email:");
+            email = sc.nextLine();
+            contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
+            System.out.println("Nome e email alterados com sucesso!");
+        }
+        else{
+            System.out.println("Plano Inválido, digite novamente!");
+        }
     }
 
     public void logout() {
@@ -90,6 +167,10 @@ public class biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void mostrar_livros() {
+        String tester = contas.get(0).getPlano();
+        System.out.println(tester);
+        int tester2 = contas.get(0).getLimlivro();
+        System.out.println(tester2);
         for (int i = 0; i < livros.size(); i++) {
             System.out.println(
                     "Titulo: " + livros.get(i).titulo + " - " + "Autor: " + livros.get(i).autor
