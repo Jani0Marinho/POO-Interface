@@ -25,23 +25,23 @@ public class Libraric {
             }
 
             while (menu == "s") {
-                System.out.println("[1] para editar perfil\n");
-                System.out.println("[2] (ADMIN) para adicionar um livro\n");
-                System.out.println("[3] para locar um livro\n");
-                System.out.println("[4] (ADMIN) para adicionar um audiobook\n");
-                System.out.println("[5] para locar um audiosbook\n");
-                System.out.println("[6] mostrar audiosbook's disponíveis\n");
-                System.out.println("[7] (ADMIN) para remover um audiobook\n");
-                System.out.println("[8] para verificar livros disponíveis\n");
-                System.out.println("[9] (ADMIN) para remover um livro do acervo\n");
-                System.out.println("[10] para devolver um livro do acervo\n");
-                System.out.println("[11] para verificar os livros locados\n");
-                System.out.println("[12] (ADMIN) para ver quais livros foram devolvidos\n");
-                System.out.println("[13] verificar se você possui multas pendentes\n");
-                System.out.println("[14] (ADMIN) confirmar pagamento de multas pelos usuários\n");
-                System.out.println("[15] (ADMIN) para verificar todas as contas cadastradas no Libraric\n");
-                System.out.println("[16] para deslogar do Libraric\n");
-                System.out.println("[17] para encerrar o programa\n");
+                System.out.println("[1] para editar perfil");
+                System.out.println("[2] (ADMIN) para adicionar um livro");
+                System.out.println("[3] para locar um livro");
+                System.out.println("[4] (ADMIN) para adicionar um audiobook");
+                System.out.println("[5] para locar um audiosbook");
+                System.out.println("[6] mostrar audiosbook's disponíveis");
+                System.out.println("[7] (ADMIN) para remover um audiobook");
+                System.out.println("[8] para verificar livros disponíveis");
+                System.out.println("[9] (ADMIN) para remover um livro do acervo");
+                System.out.println("[10] para devolver um livro do acervo");
+                System.out.println("[11] para verificar os livros locados");
+                System.out.println("[12] (ADMIN) para ver quais livros foram devolvidos");
+                System.out.println("[13] verificar se você possui multas pendentes");
+                System.out.println("[14] (ADMIN) confirmar pagamento de multas pelos usuários");
+                System.out.println("[15] (ADMIN) para verificar todas as contas cadastradas no Libraric");
+                System.out.println("[16] para deslogar do Libraric");
+                System.out.println("[17] para encerrar o programa");
                 op = sc.nextInt();
                 switch (op) {
 
