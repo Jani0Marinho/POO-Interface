@@ -3,17 +3,23 @@ public class audiobook extends ItemsBiblioteca {
     private String autor;
     private int duracao;
     private String genero;
+    private int id_audio;
 
-    public audiobook(String titulo, String autor, int duracao, int qnt_disp, String genero) {
+    public audiobook(String titulo, String autor, int duracao, int qnt_disp, String genero, int id_audio) {
         super(titulo, qnt_disp);
 
         this.duracao = duracao;
         this.autor = autor;
         this.genero = genero;
+        this.id_audio = id_audio;
     }
 
     public String getAutor() {
         return autor;
+    }
+
+    public int getAudio() {
+        return id_audio;
     }
 
     public int getDuracao() {
@@ -45,7 +51,6 @@ public class audiobook extends ItemsBiblioteca {
         System.out.println(" duracao: " + duracao);
         System.out.println(" Genero: " + genero);
         System.out.println(" Quantidade disponível: " + getQnt_disp() + "\n");
-
     }
 
 }
