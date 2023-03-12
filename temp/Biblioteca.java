@@ -3,9 +3,12 @@ import java.util.*;
 public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     public ArrayList<conta> contas = new ArrayList<>();
     private ArrayList<Livro> livros = new ArrayList<>();
+    private ArrayList<audiobook> audiobook = new ArrayList<>();
 
     private ArrayList<Integer> id_user = new ArrayList<>();
+    private ArrayList<Integer> id_userAudio = new ArrayList<>();
     private ArrayList<Integer> isbn_locado = new ArrayList<>();
+    private ArrayList<Integer> audio_locado = new ArrayList<>();
 
     private ArrayList<Integer> id_devolvido = new ArrayList<>();
     private ArrayList<Integer> isbn_devolvido = new ArrayList<>();
@@ -13,7 +16,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     private ArrayList<Integer> id_multapaga = new ArrayList<>();
 
     public String genero, nome, email, senha, titulo, autor, controle, dev, nome_b, email_b, senha_b, log = "n";
-
+    int duracao, id_audio;
     private boolean logado;
 
     int k = 0, index_user = 0, op = 0, id = 1, isbn, qnt_disp, isbnlocar, isbndevolver, j, i;
@@ -30,6 +33,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         this.id_multa = new ArrayList<>();
         this.id_multapaga = new ArrayList<>();
         this.sc = new Scanner(System.in);
+        this.audiobook = new ArrayList<>();
 
         nome_b = "biblioteca";
         email_b = "biblioteca123@gmail.com";
@@ -216,10 +220,24 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             // break;
         } else {
             System.out.println("Livros locados: ");
+
+            for (k = 0; k < id_user.size(); k++) {
+                if (id_user.get(k) == index_user) {
+                    System.out.println(isbn_locado.get(k));
+                }
+            }
         }
-        for (k = 0; k < id_user.size(); k++) {
-            if (id_user.get(k) == index_user) {
-                System.out.println(isbn_locado.get(k));
+
+        if (id_user.size() == 0) {
+            System.out.println("*NÃO HÁ AUDIOS LOCADOS*");
+            // break;
+        } else {
+            System.out.println("Audiobooks locados: ");
+
+            for (k = 0; k < id_userAudio.size(); k++) {
+                if (id_userAudio.get(k) == index_user) {
+                    System.out.println(audio_locado.get(k));
+                }
             }
         }
     }
@@ -286,6 +304,83 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
                     id_multapaga.remove(j);
                     id_devolvido.remove(j);
                     id_multa.remove(j);
+                }
+            }
+        } else {
+            System.out.println("Somente adminstradores podem usar esta função");
+        }
+    }
+
+    public void add_audiobook() {
+
+        if (index_user == 0) {
+            // titulo, cod, qntd
+            System.out.println("Digite o titulo:");
+            titulo = sc.nextLine();
+
+            System.out.println("Digite o autor:");
+            autor = sc.nextLine();
+
+            System.out.println("Digite a duracao");
+            duracao = sc.nextInt();
+
+            System.out.println("Digite a quantidade:");
+            qnt_disp = sc.nextInt();
+
+            System.out.println("Digite o gênero:");
+            sc.nextLine();
+            genero = sc.nextLine();
+
+            System.out.println("Digite o código:");
+            id_audio = sc.nextInt();
+
+            audiobook.add(new audiobook(titulo, autor, duracao, qnt_disp, genero, id_audio));
+        } else {
+            System.out.println("Somente adminstradores podem usar esta função");
+        }
+    }
+
+    public void locar_audio() {
+        System.out.println("Digite o código do audiobook: ");
+        id_audio = sc.nextInt();
+        for (k = 0; k < audiobook.size(); k++) {
+            if (id_audio == audiobook.get(k).getAudio()) {
+                if (audiobook.get(k).getQnt_disp() == 0) {
+                    System.out.println("Livro indisponível, tente novamente em outro momento.");
+                    break;
+                } else {
+                    audiobook.set(k,
+                            new audiobook(audiobook.get(k).getTitulo(), audiobook.get(k).getAutor(),
+                                    audiobook.get(k).getDuracao(),
+                                    audiobook.get(k).getQnt_disp() - 1, audiobook.get(k).getGenero(), id_audio));
+
+                    audiobook.get(k).locar();
+                    id_userAudio.add(index_user);
+                    audio_locado.add(id_audio);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void mostrar_audios() {
+        for (int i = 0; i < audiobook.size(); i++) {
+            System.out.printf(
+                    "Titulo: " + audiobook.get(i).getTitulo() + " - " + "Autor: " + audiobook.get(i).getAutor()
+                            + " - "
+                            + " Código do áudio: " + audiobook.get(i).getAudio() + " - "
+                            + " Quantidade disponível: "
+                            + audiobook.get(i).getQnt_disp() + " Genero: " + audiobook.get(i).getGenero() + "\n");
+        }
+    }
+
+    public void remover_audios() {
+        if (index_user == 0) {
+            System.out.println("Digite o código do audio que deseja remover: ");
+            id_audio = sc.nextInt();
+            for (k = 0; k < audiobook.size(); k++) {
+                if (isbnlocar == audiobook.get(k).getAudio()) {
+                    audiobook.remove(k);
                 }
             }
         } else {
