@@ -12,8 +12,7 @@ public class Libraric {
 
             while (menu != "s") {
                 System.out.println("Você possui login ? S/N");
-                controle = sc.next();
-                sc.nextLine();
+                controle = sc.nextLine();
 
                 if (controle.equalsIgnoreCase("S")) {
                     while (!login.equals("logado")) {
@@ -26,10 +25,24 @@ public class Libraric {
             }
 
             while (menu == "s") {
-                System.out.println(
-                        "[1] para editar perfil\n[2] (ADMIN) para adicionar um livro\n[3] para verificar livros disponíveis\n[4] (ADMIN) para remover um livro do acervo\n[5] para locar um livro do acervo\n[6] para devolver um livro ao acervo\n[7] para ver quais livros você locou\n[8] (ADMIN) para ver quais livros os usuários notificaram devolução\n[9] verificar se você possui multas pendentes\n[10] (ADMIN) confirmar pagamento de multas pelos usuários\n[11] (ADMIN) para verificar todas as contas cadastradas no Libraric\n[12] para deslogar do Libraric\n[13] para encerrar o programa\n");
+                System.out.println("[1] para editar perfil\n");
+                System.out.println("[2] (ADMIN) para adicionar um livro\n");
+                System.out.println("[3] para locar um livro\n");
+                System.out.println("[4] (ADMIN) para adicionar um audiobook\n");
+                System.out.println("[5] para locar um audiosbook\n");
+                System.out.println("[6] mostrar audiosbook's disponíveis\n");
+                System.out.println("[7] (ADMIN) para remover um audiobook\n");
+                System.out.println("[8] para verificar livros disponíveis\n");
+                System.out.println("[9] (ADMIN) para remover um livro do acervo\n");
+                System.out.println("[10] para devolver um livro do acervo\n");
+                System.out.println("[11] para verificar os livros locados\n");
+                System.out.println("[12] (ADMIN) para ver quais livros foram devolvidos\n");
+                System.out.println("[13] verificar se você possui multas pendentes\n");
+                System.out.println("[14] (ADMIN) confirmar pagamento de multas pelos usuários\n");
+                System.out.println("[15] (ADMIN) para verificar todas as contas cadastradas no Libraric\n");
+                System.out.println("[16] para deslogar do Libraric\n");
+                System.out.println("[17] para encerrar o programa\n");
                 op = sc.nextInt();
-
                 switch (op) {
 
                     case 1:
@@ -41,48 +54,65 @@ public class Libraric {
                         break;
 
                     case 3:
-                        biblioteca.mostrar_livros();
-                        break;
-
-                    case 4:
-                        biblioteca.remover_livro();
-                        break;
-
-                    case 5:
                         biblioteca.locar_livro();
                         break;
 
+                    case 4:
+                        biblioteca.add_audiobook();
+                        break;
+
+                    case 5:
+                        biblioteca.locar_audio();
+                        break;
+
                     case 6:
-                        biblioteca.devolver_livro();
+                        biblioteca.mostrar_audios();
                         break;
 
                     case 7:
-                        biblioteca.livros_locados();
+                        biblioteca.remover_audios();
                         break;
 
                     case 8:
-                        biblioteca.livros_devolvidos();
+                        biblioteca.mostrar_livros();
                         break;
 
                     case 9:
-                        biblioteca.verificar_multas();
+                        biblioteca.remover_livro();
                         break;
 
                     case 10:
-                        biblioteca.multas_pagas();
+                        biblioteca.devolver_livro();
                         break;
 
                     case 11:
-                        biblioteca.listar_usuarios();
+                        biblioteca.livros_locados();
                         break;
 
                     case 12:
-                        System.out.println("Deslogado\n");
-                        menu = "n";
-                        login = "deslogado";
+                        biblioteca.livros_devolvidos();
                         break;
 
                     case 13:
+                        biblioteca.verificar_multas();
+                        break;
+
+                    case 14:
+                        biblioteca.multas_pagas();
+                        break;
+
+                    case 15:
+                        biblioteca.listar_usuarios();
+                        break;
+
+                    case 16:
+                        System.out.println("Deslogado\n");
+                        menu = "n";
+                        login = "deslogado";
+
+                        break;
+
+                    case 17:
                         op = -1;
                         menu = "n";
                         break;
