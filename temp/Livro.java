@@ -38,7 +38,5 @@ public class Livro extends ItemsBiblioteca {
         System.out.println(" Isbn: " + isbn);
         System.out.println(" Genero: " + genero);
         System.out.println(" Quantidade disponível: " + getQnt_disp() + "\n");
-
     }
-
 }
