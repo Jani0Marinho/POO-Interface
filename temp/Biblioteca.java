@@ -145,11 +145,10 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
                     System.out.println("Livro indisponível, tente novamente em outro momento.");
                     break;
                 } else {
-                    
-                    Livro meuLivro = livros.set(k, new Livro(livros.get(k).getTitulo(), livros.get(k).getAutor(), isbnlocar,
-                    livros.get(k).getQnt_disp() - 1, livros.get(k).getGenero()));
-                    meuLivro.locar();
+                    livros.set(k, new Livro(livros.get(k).getTitulo(), livros.get(k).getAutor(), isbnlocar,
+                            livros.get(k).getQnt_disp() - 1, livros.get(k).getGenero()));
 
+                    livros.get(k).locar();
                     id_user.add(index_user);
                     isbn_locado.add(isbnlocar);
                     break;
