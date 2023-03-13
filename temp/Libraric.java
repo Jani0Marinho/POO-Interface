@@ -12,7 +12,7 @@ public class Libraric {
 
             while (menu != "s") {
                 System.out.println("Você possui login ? S/N");
-                controle = sc.nextLine();
+                controle = sc.next();
 
                 if (controle.equalsIgnoreCase("S")) {
                     while (!login.equals("logado")) {
@@ -106,10 +106,9 @@ public class Libraric {
                         break;
 
                     case 16:
-                        System.out.println("Deslogado\n");
+                        System.out.print("Deslogado\n");
                         menu = "n";
                         login = "deslogado";
-
                         break;
 
                     case 17:
