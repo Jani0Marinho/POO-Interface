@@ -34,6 +34,8 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         this.id_multapaga = new ArrayList<>();
         this.sc = new Scanner(System.in);
         this.audiobook = new ArrayList<>();
+        this.audio_locado = new ArrayList<>();
+        this.id_userAudio = new ArrayList<>();
 
         nome_b = "biblioteca";
         email_b = "biblioteca123@gmail.com";
@@ -61,13 +63,13 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
 
     public void cadastrar_usuario() {
         System.out.println("Digite seu nome:");
-        nome = sc.nextLine();
+        nome = sc.next();
 
         System.out.println("Digite o email:");
-        email = sc.nextLine();
+        email = sc.next();
 
         System.out.println("Digite a senha:");
-        senha = sc.nextLine();
+        senha = sc.next();
 
         System.out.println("Usuário " + nome + " cadastrado!");
 
@@ -232,6 +234,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             System.out.println("*NÃO HÁ AUDIOS LOCADOS*");
             // break;
         } else {
+            System.out.println("\n");
             System.out.println("Audiobooks locados: ");
 
             for (k = 0; k < id_userAudio.size(); k++) {
@@ -316,10 +319,10 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         if (index_user == 0) {
             // titulo, cod, qntd
             System.out.println("Digite o titulo:");
-            titulo = sc.nextLine();
+            titulo = sc.next();
 
             System.out.println("Digite o autor:");
-            autor = sc.nextLine();
+            autor = sc.next();
 
             System.out.println("Digite a duracao");
             duracao = sc.nextInt();
