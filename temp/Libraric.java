@@ -3,7 +3,7 @@ import java.util.*;
 public class Libraric {
     public static void main(String[] args) {
         Biblioteca biblioteca = new Biblioteca();
-        int op = 0;
+        int op = 0, bookoption = 0;
         String login = "n", controle, menu = "n";
 
         Scanner sc = new Scanner(System.in);
@@ -26,14 +26,10 @@ public class Libraric {
 
             while (menu == "s") {
                 System.out.println("[1] para editar perfil");
-                System.out.println("[2] (ADMIN) para adicionar um livro");
-                System.out.println("[3] para locar um livro");
-                System.out.println("[4] (ADMIN) para adicionar um audiobook");
-                System.out.println("[5] para locar um audiosbook");
-                System.out.println("[6] mostrar audiosbook's disponíveis");
-                System.out.println("[7] (ADMIN) para remover um audiobook");
-                System.out.println("[8] para verificar livros disponíveis");
-                System.out.println("[9] (ADMIN) para remover um livro do acervo");
+                System.out.println("[2] (ADMIN) para adicionar um livro ou um audiobook");
+                System.out.println("[3] para locar um livro ou um audiobook");
+                System.out.println("[6] mostrar livros disponíveis ou audiosbook's disponíveis");
+                System.out.println("[7] (ADMIN) para remover um livro ou um audiobook");
                 System.out.println("[10] para devolver um livro do acervo");
                 System.out.println("[11] para verificar os livros locados");
                 System.out.println("[12] (ADMIN) para ver quais livros foram devolvidos");
@@ -50,11 +46,32 @@ public class Libraric {
                         break;
 
                     case 2:
+                        System.out.println("Para adicionar um livro digite 1, para adicionar um audiobook digite 2");
+                        bookoption = sc.nextInt();
+                        if(bookoption == 1){
+                            biblioteca.add_livro();
+                        }
+                        else if(bookoption == 2){
+                            biblioteca.add_audiobook();
+                        }
+                        else{
+                            System.out.println("Opção inválida!");
+                        }
                         biblioteca.add_livro();
                         break;
 
                     case 3:
-                        biblioteca.locar_livro();
+                        System.out.println("Para locar um livro digite 1, para locar um audiobook digite 2");
+                        bookoption = sc.nextInt();
+                        if(bookoption == 1){
+                            biblioteca.locar_livro();
+                        }
+                        else if(bookoption == 2){
+                            biblioteca.locar_audio();
+                        }
+                        else{
+                            System.out.println("Opção inválida!");
+                        }
                         break;
 
                     case 4:
@@ -66,15 +83,34 @@ public class Libraric {
                         break;
 
                     case 6:
-                        biblioteca.mostrar_audios();
+                        System.out.println("Para mostrar os livros disponíveis digite 1, para mostrar os audiobooks disponíveis digite 2");
+                        bookoption = sc.nextInt();
+                        if(bookoption == 1){
+                            biblioteca.mostrar_livros();
+                        }
+                        else if(bookoption == 2){
+                            biblioteca.mostrar_audios();
+                        }
+                        else{
+                            System.out.println("Opção inválida!");
+                        }
                         break;
 
                     case 7:
-                        biblioteca.remover_audios();
+                        System.out.println("Para mostrar os livros disponíveis digite 1, para mostrar os audiobooks disponíveis digite 2");
+                        bookoption = sc.nextInt();
+                        if(bookoption == 1){
+                            biblioteca.remover_livro();
+                        }
+                        else if(bookoption == 2){
+                            biblioteca.remover_audios();
+                        }
+                        else{
+                            System.out.println("Opção inválida!");
+                        }
                         break;
 
                     case 8:
-                        biblioteca.mostrar_livros();
                         break;
 
                     case 9:
