@@ -1,7 +1,7 @@
 public class conta {
 
-    private String email, senha, nome;
-    private int id, index_user, biostam = 0;
+    private String email, senha, nome, planoesc; // tinha um index user, mas foi removido
+    private int id, biostam = 0;
 
     public conta(String email, String senha, String nome, int id) {
         this.email = email;
@@ -26,11 +26,8 @@ public class conta {
         return id;
     }
 
-    public int getIndex_user() {
-        return index_user;
-    }
-
     public void defPlano(String planoesc) {
+        this.planoesc = planoesc;
     }
 
     public String getPlano() {
