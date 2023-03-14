@@ -15,7 +15,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     private ArrayList<Integer> id_multa = new ArrayList<>();
     private ArrayList<Integer> id_multapaga = new ArrayList<>();
 
-    public String genero, nome, email, senha, titulo, autor, controle, dev, nome_b, email_b, senha_b, log = "n";
+    public String genero, nome, email, senha, titulo, autor, controle, dev, nome_b, email_b, senha_b, log = "n", plan, BIO;
     int duracao, id_audio;
     private boolean logado;
 
@@ -40,7 +40,8 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         nome_b = "biblioteca";
         email_b = "biblioteca123@gmail.com";
         senha_b = "admin";
-        contas.add(new conta(email_b, senha_b, nome_b, 0));
+        contas.add(new admin(email_b, senha_b, nome_b, 0));
+        contas.get(0).defPlano("Administrador");
         livros.add(new Livro("Harry Potter", "JK", 7, 55, "Fantasia"));
     }
 
@@ -62,29 +63,99 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void cadastrar_usuario() {
-        System.out.println("Digite seu nome:");
-        nome = sc.next();
+        System.out.println("Digite seu plano:");
+        plan = sc.nextLine();
 
-        System.out.println("Digite o email:");
-        email = sc.next();
+        if(plan.equalsIgnoreCase("comum")){
+            System.out.println("Digite seu nome:");
+            nome = sc.nextLine();
 
-        System.out.println("Digite a senha:");
-        senha = sc.next();
+            System.out.println("Digite o email:");
+            email = sc.nextLine();
 
-        System.out.println("Usuário " + nome + " cadastrado!");
+            System.out.println("Digite a senha:");
+            senha = sc.nextLine();
 
-        contas.add(new conta(email, senha, nome, id));
-        id += 1;
+            contas.get(index_user).defPlano(plan);
+        
+            System.out.println("Usuário " + nome + " cadastrado!");
+
+            contas.add(new comum(email, senha, nome, id));
+            id += 1;
+        }
+        else if(plan.equalsIgnoreCase("premium")){
+            System.out.println("Digite seu nome:");
+            nome = sc.nextLine();
+
+            System.out.println("Digite o email:");
+            email = sc.nextLine();
+
+            System.out.println("Digite a senha:");
+            senha = sc.nextLine();
+
+            contas.get(index_user).defPlano(plan);
+            
+            System.out.println("Usuário " + nome + " cadastrado!");
+
+            contas.add(new premium(email, senha, nome, id));
+            id += 1;
+        }
+        else{
+            System.out.println("Plano inválido! Digite novamente.");
+        }
     }
 
     public void editar_perfil() {
-        System.out.println("Digite o novo nome:");
-        sc.nextLine();
-        nome = sc.nextLine();
-        System.out.println("Digite o novo email:");
-        email = sc.nextLine();
-        contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
-        System.out.println("Nome e email alterados com sucesso!");
+        if(contas.get(index_user).getPlano().equalsIgnoreCase("comum")){
+            System.out.println("Digite o novo nome:");
+            sc.nextLine();
+            nome = sc.nextLine();
+            System.out.println("Digite o novo email:");
+            email = sc.nextLine();
+            System.out.println("Digite uma BIO para você com até 50 caracteres (caso não desejar digite 00):");
+            BIO = sc.nextLine();
+            if(BIO.length() > 50){
+                System.out.println("Você excedeu o número de caracteres");
+            }
+            else if(BIO == "00"){
+            }
+            else{
+                contas.get(index_user).defBios(BIO);
+            }
+            contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
+            System.out.println("Nome e email alterados com sucesso!");
+        }
+        else if(contas.get(index_user).getPlano().equalsIgnoreCase("premium")){
+            System.out.println("Digite o novo nome:");
+            sc.nextLine();
+            nome = sc.nextLine();
+            System.out.println("Digite o novo email:");
+            email = sc.nextLine();
+            System.out.println("Digite uma BIO para você com até 200 caracteres (caso não desejar digite 00):");
+            BIO = sc.nextLine();
+            if(BIO.length() > 200){
+                System.out.println("Você excedeu o número de caracteres");
+            }
+            else if(BIO == "00"){
+            }
+            else{
+                contas.get(index_user).defBios(BIO);
+            }
+            contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
+            System.out.println("Nome e email alterados com sucesso!");
+        }
+        else if(contas.get(index_user).getPlano().equalsIgnoreCase("administrador")){
+            System.out.println("Digite o novo nome:");
+            sc.nextLine();
+            nome = sc.nextLine();
+            System.out.println("Digite o novo email:");
+            email = sc.nextLine();
+            contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
+            System.out.println("Nome e email alterados com sucesso!");
+        }
+        else{
+            System.out.println("Plano Inválido, digite novamente!");
+        }
     }
 
     public void logout() {
@@ -143,6 +214,22 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void locar_livro() {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
+            System.out.println("Administradores não podem executar esta funcionalidade!");
+            return;
+        }
+        else if(contas.get(index_user).getPlano().equalsIgnoreCase("comum")){
+            if(id_user.size() == 1){
+                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 1 livro locado simultaneamente!");
+                return;
+            }
+        }
+        else{
+            if(id_user.size() == 15){
+                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 15 livros locados simultaneamente!");
+                return;
+            }
+        }
         System.out.println("Digite o código ISBN do livro que deseja locar: ");
         isbnlocar = sc.nextInt();
         for (k = 0; k < livros.size(); k++) {
@@ -164,7 +251,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void remover_livro() {
-        if (index_user == 0) {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
             System.out.println("Digite o código ISBN do livro que deseja remover do acervo: ");
             isbnlocar = sc.nextInt();
             for (k = 0; k < livros.size(); k++) {
@@ -178,6 +265,10 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void devolver_livro() {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
+            System.out.println("Administradores não podem executar esta funcionalidade!");
+            return;
+        }
         if (id_user.size() == 0) {
             System.out.println("*NÃO HÁ LIVRO LOCADOS*");
             // break;
@@ -217,6 +308,10 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void livros_locados() {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
+            System.out.println("Administradores não podem executar esta funcionalidade!");
+            return;
+        }
         if (id_user.size() == 0) {
             System.out.println("*NÃO HÁ LIVRO LOCADOS*");
             // break;
@@ -246,7 +341,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void livros_devolvidos() {
-        if (index_user == 0) {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
             for (j = 0; j < id_devolvido.size(); j++) {
                 System.out.println("O usuario de id " + id_devolvido.get(j) + " devolveu o livro "
                         + isbn_devolvido.get(j));
@@ -344,6 +439,22 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void locar_audio() {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
+            System.out.println("Administradores não podem executar esta funcionalidade!");
+            return;
+        }
+        else if(contas.get(index_user).getPlano().equalsIgnoreCase("comum")){
+            if(audiobook.size() == 1){
+                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 1 livro locado simultaneamente!");
+                return;
+            }
+        }
+        else{
+            if(audiobook.size() == 15){
+                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 15 livros locados simultaneamente!");
+                return;
+            }
+        }
         System.out.println("Digite o código do audiobook: ");
         id_audio = sc.nextInt();
         for (k = 0; k < audiobook.size(); k++) {
@@ -367,6 +478,10 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void mostrar_audios() {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
+            System.out.println("Administradores não podem executar esta funcionalidade!");
+            return;
+        }
         for (int i = 0; i < audiobook.size(); i++) {
             System.out.printf(
                     "Titulo: " + audiobook.get(i).getTitulo() + " - " + "Autor: " + audiobook.get(i).getAutor()
@@ -378,6 +493,10 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     }
 
     public void remover_audios() {
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
+            System.out.println("Administradores não podem executar esta funcionalidade!");
+            return;
+        }
         if (index_user == 0) {
             System.out.println("Digite o código do audio que deseja remover: ");
             id_audio = sc.nextInt();
