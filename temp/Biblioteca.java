@@ -1,9 +1,12 @@
 import java.util.*;
 
 public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
-    public ArrayList<conta> contas = new ArrayList<>();
+    private ArrayList<conta> contas = new ArrayList<>(); // tava public, coloquei private
     private ArrayList<Livro> livros = new ArrayList<>();
     private ArrayList<audiobook> audiobook = new ArrayList<>();
+    private ArrayList<postit> postit = new ArrayList<>();
+    private ArrayList<apoio_livros> apoio_livros = new ArrayList<>();
+    private ArrayList<marca_texto> marca_texto = new ArrayList<>();
 
     private ArrayList<Integer> id_user = new ArrayList<>();
     private ArrayList<Integer> id_userAudio = new ArrayList<>();
@@ -15,11 +18,12 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
     private ArrayList<Integer> id_multa = new ArrayList<>();
     private ArrayList<Integer> id_multapaga = new ArrayList<>();
 
-    public String genero, nome, email, senha, titulo, autor, controle, dev, nome_b, email_b, senha_b, log = "n", plan, BIO;
-    int duracao, id_audio;
+    public String genero, tamanho, nome, email, senha, cor, marca, plan, titulo, autor, controle, dev, nome_b, email_b,
+            senha_b, log = "n", BIO;
+    int duracao, id_audio, escolha;
     private boolean logado;
 
-    int k = 0, index_user = 0, op = 0, id = 1, isbn, qnt_disp, isbnlocar, isbndevolver, j, i;
+    int k = 0, index_user = 0, op = 0, id = 1, isbn, qnt_disp, isbnlocar, isbndevolver, j, i, slots;
 
     Scanner sc = new Scanner(System.in);
 
@@ -40,16 +44,16 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         nome_b = "biblioteca";
         email_b = "biblioteca123@gmail.com";
         senha_b = "admin";
-        contas.add(new admin(email_b, senha_b, nome_b, 0));
-        contas.get(0).defPlano("Administrador");
+        contas.add(new conta(email_b, senha_b, nome_b, 0));
         livros.add(new Livro("Harry Potter", "JK", 7, 55, "Fantasia"));
+        contas.get(0).defPlano("Administrador");
     }
 
     public String login() {
         System.out.println("Digite o email:");
-        email = sc.nextLine();
+        email = sc.next();
         System.out.println("Digite a senha:");
-        senha = sc.nextLine();
+        senha = sc.next();
         for (i = 0; i < contas.size(); i++) {
             if (contas.get(i).getEmail().equals(email) && contas.get(i).getSenha().equals(senha)) {
                 index_user = i;
@@ -66,7 +70,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         System.out.println("Digite seu plano:");
         plan = sc.nextLine();
 
-        if(plan.equalsIgnoreCase("comum")){
+        if (plan.equalsIgnoreCase("comum")) {
             System.out.println("Digite seu nome:");
             nome = sc.nextLine();
 
@@ -77,13 +81,12 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             senha = sc.nextLine();
 
             contas.get(index_user).defPlano(plan);
-        
+
             System.out.println("Usuário " + nome + " cadastrado!");
 
             contas.add(new comum(email, senha, nome, id));
             id += 1;
-        }
-        else if(plan.equalsIgnoreCase("premium")){
+        } else if (plan.equalsIgnoreCase("premium")) {
             System.out.println("Digite seu nome:");
             nome = sc.nextLine();
 
@@ -94,19 +97,18 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             senha = sc.nextLine();
 
             contas.get(index_user).defPlano(plan);
-            
+
             System.out.println("Usuário " + nome + " cadastrado!");
 
             contas.add(new premium(email, senha, nome, id));
             id += 1;
-        }
-        else{
+        } else {
             System.out.println("Plano inválido! Digite novamente.");
         }
     }
 
     public void editar_perfil() {
-        if(contas.get(index_user).getPlano().equalsIgnoreCase("comum")){
+        if (contas.get(index_user).getPlano().equalsIgnoreCase("comum")) {
             System.out.println("Digite o novo nome:");
             sc.nextLine();
             nome = sc.nextLine();
@@ -114,18 +116,15 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             email = sc.nextLine();
             System.out.println("Digite uma BIO para você com até 50 caracteres (caso não desejar digite 00):");
             BIO = sc.nextLine();
-            if(BIO.length() > 50){
+            if (BIO.length() > 50) {
                 System.out.println("Você excedeu o número de caracteres");
-            }
-            else if(BIO == "00"){
-            }
-            else{
+            } else if (BIO == "00") {
+            } else {
                 contas.get(index_user).defBios(BIO);
             }
             contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
             System.out.println("Nome e email alterados com sucesso!");
-        }
-        else if(contas.get(index_user).getPlano().equalsIgnoreCase("premium")){
+        } else if (contas.get(index_user).getPlano().equalsIgnoreCase("premium")) {
             System.out.println("Digite o novo nome:");
             sc.nextLine();
             nome = sc.nextLine();
@@ -133,18 +132,15 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             email = sc.nextLine();
             System.out.println("Digite uma BIO para você com até 200 caracteres (caso não desejar digite 00):");
             BIO = sc.nextLine();
-            if(BIO.length() > 200){
+            if (BIO.length() > 200) {
                 System.out.println("Você excedeu o número de caracteres");
-            }
-            else if(BIO == "00"){
-            }
-            else{
+            } else if (BIO == "00") {
+            } else {
                 contas.get(index_user).defBios(BIO);
             }
             contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
             System.out.println("Nome e email alterados com sucesso!");
-        }
-        else if(contas.get(index_user).getPlano().equalsIgnoreCase("administrador")){
+        } else if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
             System.out.println("Digite o novo nome:");
             sc.nextLine();
             nome = sc.nextLine();
@@ -152,8 +148,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             email = sc.nextLine();
             contas.set(index_user, new conta(email, contas.get(index_user).getSenha(), nome, id));
             System.out.println("Nome e email alterados com sucesso!");
-        }
-        else{
+        } else {
             System.out.println("Plano Inválido, digite novamente!");
         }
     }
@@ -217,16 +212,16 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
             System.out.println("Administradores não podem executar esta funcionalidade!");
             return;
-        }
-        else if(contas.get(index_user).getPlano().equalsIgnoreCase("comum")){
-            if(id_user.size() == 1){
-                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 1 livro locado simultaneamente!");
+        } else if (contas.get(index_user).getPlano().equalsIgnoreCase("comum")) {
+            if (id_user.size() == 1) {
+                System.out.println(
+                        "Você não pode locar mais livros, você atingiu seu limite de 1 livro locado simultaneamente!");
                 return;
             }
-        }
-        else{
-            if(id_user.size() == 15){
-                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 15 livros locados simultaneamente!");
+        } else {
+            if (id_user.size() == 15) {
+                System.out.println(
+                        "Você não pode locar mais livros, você atingiu seu limite de 15 livros locados simultaneamente!");
                 return;
             }
         }
@@ -411,8 +406,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
 
     public void add_audiobook() {
 
-        if (index_user == 0) {
-            // titulo, cod, qntd
+        if (contas.get(k).getId() == 0) {
             System.out.println("Digite o titulo:");
             titulo = sc.next();
 
@@ -442,16 +436,16 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         if (contas.get(index_user).getPlano().equalsIgnoreCase("administrador")) {
             System.out.println("Administradores não podem executar esta funcionalidade!");
             return;
-        }
-        else if(contas.get(index_user).getPlano().equalsIgnoreCase("comum")){
-            if(audiobook.size() == 1){
-                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 1 livro locado simultaneamente!");
+        } else if (contas.get(index_user).getPlano().equalsIgnoreCase("comum")) {
+            if (audiobook.size() == 1) {
+                System.out.println(
+                        "Você não pode locar mais livros, você atingiu seu limite de 1 livro locado simultaneamente!");
                 return;
             }
-        }
-        else{
-            if(audiobook.size() == 15){
-                System.out.println("Você não pode locar mais livros, você atingiu seu limite de 15 livros locados simultaneamente!");
+        } else {
+            if (audiobook.size() == 15) {
+                System.out.println(
+                        "Você não pode locar mais livros, você atingiu seu limite de 15 livros locados simultaneamente!");
                 return;
             }
         }
@@ -507,6 +501,74 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             }
         } else {
             System.out.println("Somente adminstradores podem usar esta função");
+        }
+    }
+
+    // porta-livros, suporte de livros - cor
+    public void add_utensilios() {
+        if (contas.get(index_user).getPlano().equals("administrador")) {// index_user == 0 ele funciona
+            System.out.println("Informe o código do utensílio que deseja adicionar");
+            System.out.println("[1] - Postit\n[2] - Marca texto\n[3] - Apoio de livros");
+            escolha = sc.nextInt();
+
+            if (escolha == 1) {
+                System.out.println("Informe a marca");
+                marca = sc.next();
+                System.out.println("Informe a cor");
+                cor = sc.next();
+                System.out.println("Informe a quantidade");
+                qnt_disp = sc.nextInt();
+
+                postit.add(new postit(marca, cor, qnt_disp));
+            } else if (escolha == 2) {
+
+                System.out.println("Informe a marca");
+                marca = sc.next();
+                System.out.println("Informe a cor");
+                cor = sc.next();
+                System.out.println("Informe o tamanho");
+                tamanho = sc.next();
+                System.out.println("Informe a quantidade");
+                qnt_disp = sc.nextInt();
+
+                marca_texto.add(new marca_texto(marca, cor, tamanho, qnt_disp));
+            } else if (escolha == 3) {
+                System.out.println("Informe a marca");
+                marca = sc.next();
+                System.out.println("Informe a quantidade de slots");
+                slots = sc.nextInt();
+                System.out.println("Informe a quantidade");
+                qnt_disp = sc.nextInt();
+
+                apoio_livros.add(new apoio_livros(marca, slots, qnt_disp));
+            }
+
+        } else {
+            System.out.println("Somente administradores podem usar esta função");
+        }
+    }
+
+    public void ver_utensilios() {
+
+        System.out.println("Postit's: ");
+        for (i = 0; i < postit.size(); i++) {
+            System.out.println("Marca: " + postit.get(i).getMarca() + "\nCor: " + postit.get(i).getCor()
+                    + "\nQuantidade: " + postit.get(i).getQuantidade());
+        }
+        System.out.println("\n");
+
+        System.out.println("Marca textos: ");
+        for (i = 0; i < marca_texto.size(); i++) {
+            System.out.println("Marca: " + marca_texto.get(i).getMarca() + "\nCor: " + marca_texto.get(i).getCor()
+                    + "\nTamanho:" + marca_texto.get(i).getTam() + "\nQuantidade: "
+                    + marca_texto.get(i).getQuantidade());
+        }
+        System.out.println("\n");
+
+        System.out.println("Apoio de livros: ");
+        for (i = 0; i < apoio_livros.size(); i++) {
+            System.out.println("Marca: " + apoio_livros.get(i).getMarca() + "\nSlots: " + apoio_livros.get(i).getSlots()
+                    + "\nQuantidade: " + apoio_livros.get(i).getQuantidade());
         }
     }
 
