@@ -41,7 +41,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
         email_b = "biblioteca123@gmail.com";
         senha_b = "admin";
         contas.add(new conta(email_b, senha_b, nome_b, 0));
-        livros.add(new Livro("castelo", "micael", 123, 52, "luta"));
+        livros.add(new Livro("Harry Potter", "JK", 7, 55, "Fantasia"));
     }
 
     public String login() {
@@ -382,7 +382,7 @@ public class Biblioteca { // ADICIONAR ou REMOVER livros do acervo;
             System.out.println("Digite o código do audio que deseja remover: ");
             id_audio = sc.nextInt();
             for (k = 0; k < audiobook.size(); k++) {
-                if (isbnlocar == audiobook.get(k).getAudio()) {
+                if (id_audio == audiobook.get(k).getAudio()) {
                     audiobook.remove(k);
                 }
             }
