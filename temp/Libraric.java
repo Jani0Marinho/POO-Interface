@@ -48,13 +48,11 @@ public class Libraric {
                     case 2:
                         System.out.println("Para adicionar um livro digite 1, para adicionar um audiobook digite 2");
                         bookoption = sc.nextInt();
-                        if(bookoption == 1){
+                        if (bookoption == 1) {
                             biblioteca.add_livro();
-                        }
-                        else if(bookoption == 2){
+                        } else if (bookoption == 2) {
                             biblioteca.add_audiobook();
-                        }
-                        else{
+                        } else {
                             System.out.println("Opção inválida!");
                         }
                         biblioteca.add_livro();
@@ -63,13 +61,11 @@ public class Libraric {
                     case 3:
                         System.out.println("Para locar um livro digite 1, para locar um audiobook digite 2");
                         bookoption = sc.nextInt();
-                        if(bookoption == 1){
+                        if (bookoption == 1) {
                             biblioteca.locar_livro();
-                        }
-                        else if(bookoption == 2){
+                        } else if (bookoption == 2) {
                             biblioteca.locar_audio();
-                        }
-                        else{
+                        } else {
                             System.out.println("Opção inválida!");
                         }
                         break;
@@ -83,29 +79,27 @@ public class Libraric {
                         break;
 
                     case 6:
-                        System.out.println("Para mostrar os livros disponíveis digite 1, para mostrar os audiobooks disponíveis digite 2");
+                        System.out.println(
+                                "Para mostrar os livros disponíveis digite 1, para mostrar os audiobooks disponíveis digite 2");
                         bookoption = sc.nextInt();
-                        if(bookoption == 1){
+                        if (bookoption == 1) {
                             biblioteca.mostrar_livros();
-                        }
-                        else if(bookoption == 2){
+                        } else if (bookoption == 2) {
                             biblioteca.mostrar_audios();
-                        }
-                        else{
+                        } else {
                             System.out.println("Opção inválida!");
                         }
                         break;
 
                     case 7:
-                        System.out.println("Para mostrar os livros disponíveis digite 1, para mostrar os audiobooks disponíveis digite 2");
+                        System.out.println(
+                                "Para mostrar os livros disponíveis digite 1, para mostrar os audiobooks disponíveis digite 2");
                         bookoption = sc.nextInt();
-                        if(bookoption == 1){
+                        if (bookoption == 1) {
                             biblioteca.remover_livro();
-                        }
-                        else if(bookoption == 2){
+                        } else if (bookoption == 2) {
                             biblioteca.remover_audios();
-                        }
-                        else{
+                        } else {
                             System.out.println("Opção inválida!");
                         }
                         break;
@@ -150,6 +144,14 @@ public class Libraric {
                     case 17:
                         op = -1;
                         menu = "n";
+                        break;
+
+                    case 18: // ADMIN - adicionar utensílios
+                        biblioteca.add_utensilios();
+                        break;
+
+                    case 19: // ver utensílios disponíveis
+                        biblioteca.ver_utensilios();
                         break;
                 }
             }
